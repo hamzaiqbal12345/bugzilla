@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  deadline: 2022-07-29 16:31:52
+  developer: one
+  project: one
+
+two:
+  title: MyString
+  description: MyText
+  deadline: 2022-07-29 16:31:52
+  developer: two
+  project: two
