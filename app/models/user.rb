@@ -9,4 +9,6 @@ class User < ApplicationRecord
 
   has_many :projects, foreign_key: :creater_id, dependent: :destroy
   has_many :bugs, through: :projects
+
+  enum role: [:Manager, :Developer, :QA]
 end
