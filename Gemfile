@@ -20,6 +20,9 @@ gem 'devise'
 
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'pundit'
+gem 'dotenv-rails'
+
 
 
 # Use CoffeeScript for .coffee assets and views
