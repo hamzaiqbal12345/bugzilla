@@ -1,62 +1,34 @@
 class BugsController < ApplicationController
-  def index
-    @project = Project.find(params[:project_id])
-    @bugs = @project.bugs
-  end
+  before_action :find_project
 
-  def new
-    @project = Project.find(params[:project_id])
-    @bug = @project.bugs.new
-    authorize @bug
-  end
-
-  def edit
-    authorize @bug
-  end
-
-  def show
-  end
 
   def create
-    @project = Project.find(params[:project_id])
-    @bug = @project.bugs.new(params_bug)
+    @bug = @project.bugs.create(bug_params)
+    # authorize @bug
     @bug.posted_by = current_user
-    respond_to do |format|
-      if @bug.save
-        format.html {redirect_to [@project,@bug], notice: "bug was created successfully"}
-        format.json {render :show, status: :created, location: @bug}
-      else
-        format.html {render :new}
-        format.json {render json: @bug.errors, status: unprocessable_entity}
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @bug.update(params_bug)
-        format.html {redirect_to [@project, @bug], notice: "bug was updated successfully"}
-        format.json {render :show, status: :ok, location: @bug}
-      else
-        format.html {redirect_to :edit}
-        format.json {render json: @bug.errors, status: :unprocessable_entity}
-      end
-    end
+    redirect_to project_path(@project)
   end
 
   def destroy
+    @bug = @project.bugs.find(params[:id])
+    # authorize @bug
     @bug.destroy
-    respond_to do |format|
-      format.html {redirect_to [@project, Bug], notice: "Bug was deleted succesfully"}
-      format.json {head :no_content}
-    end
+    redirect_to project_path(@project)
+  end
+
+  def edit
   end
 
   private
 
-  def params_bug
-    params[:bug] = params[:bug].to_i
-    params.require(:bug).permit(:title, :description, :deadline)
+  def find_project
+    @project = Project.find(params[:project_id])
   end
+
+  def bug_params
+    params.require(:bug).permit(:title, :description, :deadline, :posted_by, :status, :bug_type, :screenshot)
+  end
+
+
 
 end

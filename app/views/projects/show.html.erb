@@ -1,2 +1,21 @@
-<h1>Projects#show</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
+<div>
+  <p id="notice"><%= notice %></p>
+
+  <div>
+    <h4>Project Name: <%= @project.title%></h4>
+    <p>Project Description: <%= @project.description %></p>
+    <%= link_to 'Edit', edit_project_path(@project) %> |
+    <%= link_to 'Back', projects_path %>
+    <p>Project Manager id: <%= @project.creator_id %></p>
+  </div>
+
+
+  <h5>Bugs</h5>
+  <%= render @project.bugs %>
+
+  <h6>Add a bug:</h6>
+  <%= render 'bugs/form' %>
+
+  <%= link_to 'Edit Bug', edit_project_bug_path(@project) %>
+
+</div>

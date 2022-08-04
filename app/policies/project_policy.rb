@@ -2,7 +2,13 @@ class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all
+      if @user.manager?
+      	scope.where(creator_id: @user.id)
+      elsif @user.qa?
+      	scope.all
+      elsif @user.developer?
+      	scope = @user.projects
+      end
     end
   end
 
@@ -12,35 +18,35 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def new?
-    if @user.role == 'Manager'
+    if @user.role == 'manager'
       return true
     end
       false
   end
 
   def create?
-    if @user.role == 'Manager'
+    if @user.role == 'manager'
       return true
     end
     false
   end
 
   def update?
-    if @user == @project.creater && @user.role == 'Manager'
+    if @user == @project.creator_id && @user.role == 'manager'
       return true
     end
     false
   end
 
   def edit?
-    if @user == @project.creater && @user.role == 'Manager'
+    if @user == @project.creator_id && @user.role == 'manager'
       return true
     end
     false
   end
 
   def delete?
-    if @user == @project.creater && @user.role == 'Manager'
+    if @user == @project.creator_id && @user.role == 'manager'
       return true
     end
     false

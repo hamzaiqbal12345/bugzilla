@@ -1,18 +1,16 @@
 class ProjectsController < ApplicationController
+  before_action :find_project, except: [:index, :new, :create]
+
   def index
-    # @projects = if current_user.Manager?
-    #   current_user.projects.all
-    # else
-    #   current_user.projects
-    # end
-    @projects = Project.all
+
+    @projects = policy_scope(Project)
   end
 
   def show
   end
 
   def new
-    @project = current_user.projects.new
+    @project = Project.new
     authorize @project
   end
 
@@ -21,44 +19,63 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(params_project)
-    @project.creator = current_user
+    @project = current_user.projects.new(project_params)
+    @project.creator_id = current_user.id
     authorize @project
     respond_to do |format|
       if @project.save
-        format.html {redirect_to @project, notice: "project was created successfully"}
-        format.json {render :show, status: :created, location: @project}
+        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.json { render action: 'show', status: :created, location: projects_path }
       else
-        format.html {render :new}
-        format.json {render json: @project.errors, status: :unprocessable_entity}
+        format.html { render action: 'new' }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    authorize @Project
-    respond_to do |format|
-      if @project.update(params_project)
-        format.html {redirect_to @project, notice: "Project was updated successfully"}
-        format.json {render :edit, status: :ok, location: @project}
-      else
-        format.html {render :edit}
-        format.json {render json: @project.errors, status: :unprocessable_entity}
-      end
+    if @project.update(project_params)
+      redirect_to @project
+    else
+      render :edit
     end
   end
 
+  def add_user
+    @user ||= User.find_by(id:params[:user_id])
+    if @project.users << @user
+      redirect_to @project
+    else
+      redirect_to @project, notice: "Can not add user to project"
+    end
+  end
+
+  def remove_user
+    @user ||= User.find_by(id:params[:user_id])
+    if @project.users.destroy(@user)
+      redirect_to @project
+    else
+      redirect_to @project, notice: "Can not remove user from project"
+    end
+  end
+
+
   def destroy
-    @project.destroy
-    respond_to do |format|
-      format.html {redirect_to projects_url, notice: "project was destroyed successfully"}
-      format.json {head :no_content}
+    if @project.destroy
+      redirect_to projects_path, notice: "Project successfully deleted"
+    else
+      redirect_to projects_path, notice: "cannot delete the project"
     end
   end
 
   private
 
-  def params_project
+  def project_params
     params.require(:project).permit(:title, :description)
   end
+
+  def find_project
+    @project ||= Project.find(params[:id])
+  end
+
 end

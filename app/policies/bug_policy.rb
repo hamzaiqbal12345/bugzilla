@@ -12,26 +12,26 @@ class BugPolicy < ApplicationPolicy
   end
 
   def new?
-    if @user.role == 'QA' && @user.projects.include?(@bug.project)
+    if @user.role == 'qa' && @user.projects.include?(@bug.project)
       return true
     end
     false
   end
 
   def create?
-    if @user.role == 'QA' && @user.projects.include?(@bug.project)
+    if @user.role == 'qa' && @user.projects.include?(@bug.project)
       return true
     end
     false
   end
 
   def edit?
-    return treu if @bug.posted_by == @user
+    return true if @bug.posted_by == @user
     false
   end
 
   def update?
-    if (!@user.role == "Developer" && @user.projects.include?(@bug.project)) || @bug.posted_by == @user
+    if (!@user.role == "developer" && @user.projects.include?(@bug.project)) || @bug.posted_by == @user
       return true
     end
     false

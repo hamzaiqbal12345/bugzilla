@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= f.label :role %><br />
-    <%= f.text_field :role, autofocus:true %>
+    <%= f.select :role, ['manager', 'developer', 'qa']%>
   </div>
 
   <div class="actions">

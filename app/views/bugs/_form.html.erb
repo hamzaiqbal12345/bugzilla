@@ -1,0 +1,29 @@
+<%= form_with(model: [ @project, @project.bugs.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.label :screenshot %>
+    <%= form.file_field :screenshot, accept:"image/png,image/gif" %>
+  </p>
+  <p>
+    <%= form.label :deadline %><br>
+    <%= form.date_select :deadline %>
+  </p>
+  <p>
+    <%= form.label :bug_type %><br>
+    <%= form.select :bug_type, ['bug', 'feature', 'improvement']%>
+  </p>
+  <p>
+    <%= form.label :status %><br>
+    <%= form.select :status, ['neew', 'started', 'completed', 'resolved']%>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

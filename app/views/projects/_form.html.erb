@@ -1,0 +1,19 @@
+<div>
+  <div>
+    <%= form_with model: project do |form| %>
+    <div>
+      <label for="title">Title</label>
+      <%= form.text_field :title, class: 'form-control', placeholder: 'title' %>
+    </div>
+    <div>
+      <label for="description">description</label>
+      <%= form.text_area :description, id: 'editor', class: 'form-control' %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+    <% end %>
+  </div>
+
+</div>

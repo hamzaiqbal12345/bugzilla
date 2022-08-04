@@ -1,7 +1,0 @@
-<% if current_user.Manager? %>
-  <%= render "home/manager", projects: @projects %>
-<% elsif current_user.Developer? %>
-  <%= render "home/developer", project: @projects %>
-<% else %>
-  <%= render "home/QA", projects: @projects %>
-<% end %>
