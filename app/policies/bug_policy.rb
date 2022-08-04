@@ -3,7 +3,7 @@ class BugPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       scope.all
-    # end
+    end
   end
 
   def initialize(user, bug)
@@ -12,33 +12,32 @@ class BugPolicy < ApplicationPolicy
   end
 
   def new?
-    if @user.role == 'qa' && @user.projects.include?(@bug.project)
+    if @user.role == 'qa'
       return true
     end
     false
   end
 
   def create?
-    if @user.role == 'qa' && @user.projects.include?(@bug.project)
+    if @user.role == 'qa'
       return true
     end
     false
   end
 
   def edit?
-    return true if @bug.posted_by == @user
-    false
-  end
-
-  def update?
-    if (!@user.role == "developer" && @user.projects.include?(@bug.project)) || @bug.posted_by == @user
+    if @bug.posted_by == @user
       return true
     end
     false
   end
 
+  def update?
+    edit?
+  end
+
   def delete?
-    if @bug.posted_by == @user
+    if @user.role == 'qa'
       return true
     end
     false
