@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @project_pres = ProjectPresenter.new(@project, view_context)
   end
 
   def new

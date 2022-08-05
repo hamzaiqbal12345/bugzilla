@@ -18,4 +18,35 @@
 
   <%= link_to 'Edit Bug', edit_project_bug_path(@project) %>
 
+
+  <h4>Developers</h4>
+  <div>
+    <ul>
+      <% @project_pres.project_developers.each do |developer| %>
+        <li>
+          <p><%= developer.name %></p>
+          <%= @project_pres.link_to_delete_user_from_project(developer.id) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <h4>Quality Assurance (QA)</h4>
+  <div>
+    <ul>
+      <% @project_pres.project_qa.each do |qa| %>
+      <li>
+        <p><%= qa.name %></p>
+        <%= @project_pres.link_to_delete_user_from_project(qa.id)%>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <h3>Unassigned developers and Qa</h3>
+
+  <%= render 'dev' %>
+  <%= render 'qa' %>
+
+
+
 </div>

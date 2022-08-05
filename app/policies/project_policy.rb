@@ -18,38 +18,23 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def new?
-    if @user.role == 'manager'
-      return true
-    end
-      false
+    @user.manager?
   end
 
   def create?
-    if @user.role == 'manager'
-      return true
-    end
-    false
+    new?
   end
 
   def update?
-    if @user == @project.creator_id && @user.role == 'manager'
-      return true
-    end
-    false
+    @user == @project.creator_id && @user.manager?
   end
 
   def edit?
-    if @user == @project.creator_id && @user.role == 'manager'
-      return true
-    end
-    false
+    update?
   end
 
   def delete?
-    if @user == @project.creator_id && @user.role == 'manager'
-      return true
-    end
-    false
+    update?
   end
 
 end

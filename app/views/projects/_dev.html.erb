@@ -1,0 +1,10 @@
+<div>
+  <ul>
+    <% @project_pres.unassigned_developers.each do |developer| %>
+    <li>
+      <p><%= developer.name %></p>
+      <%= @project_pres.link_to_add_user_to_project(developer.id) %>
+    </li>
+    <% end %>
+  </ul>
+</div>

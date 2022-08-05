@@ -12,24 +12,15 @@ class BugPolicy < ApplicationPolicy
   end
 
   def new?
-    if @user.role == 'qa'
-      return true
-    end
-    false
+    @user.qa?
   end
 
   def create?
-    if @user.role == 'qa'
-      return true
-    end
-    false
+    @user.qa?
   end
 
   def edit?
-    if @bug.posted_by == @user
-      return true
-    end
-    false
+    @bug.posted_by == @user
   end
 
   def update?
@@ -37,9 +28,6 @@ class BugPolicy < ApplicationPolicy
   end
 
   def delete?
-    if @user.role == 'qa'
-      return true
-    end
-    false
+    edit?
   end
 end

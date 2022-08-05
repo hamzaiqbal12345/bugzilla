@@ -22,6 +22,8 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'pundit'
 gem 'dotenv-rails'
+gem 'cloudinary'
+
 
 
 

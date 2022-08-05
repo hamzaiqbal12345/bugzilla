@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
   # expectional handling
   rescue_from ActiveRecord::RecordNotDestroyed, with: :not_destroyed
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  rescue_from ::ActionController::RoutingError, with: :error_occurred
-
+  rescue_from ActionController::RoutingError, with: :render_404
 
   protected
 
@@ -35,9 +34,11 @@ class ApplicationController < ActionController::Base
     render json: { errors: e.record }, status: :unprocessable_entity
   end
 
-  def error_occurred(exception)
-    render json: {error: exception.message}.to_json, status: 500
-    return
+  def render_404
+    respond_to do |format|
+      format.html { render "#{Rails.root}/public/404.html", status: 404 }
+      format.json { render json: { status: 404, message: 'Page Not Found' } }
+    end
   end
 
 end
