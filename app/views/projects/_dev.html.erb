@@ -1,9 +1,9 @@
 <div>
-  <ul>
+  <ul class="list-group">
     <% @project_pres.unassigned_developers.each do |developer| %>
-    <li>
+    <li class="list-group-item">
       <p><%= developer.name %></p>
-      <%= @project_pres.link_to_add_user_to_project(developer.id) %>
+      <button class="btn btn-primary"><%= @project_pres.link_to_assign_user_to_project(developer.id) %></button>
     </li>
     <% end %>
   </ul>

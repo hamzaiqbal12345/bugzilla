@@ -1,73 +1,88 @@
 class BugsController < ApplicationController
   before_action :find_project
-
+  before_action :authorize_bug, only: %i[create destroy]
 
   def create
-    @bug = @project.bugs.create(bug_params)
+    @bug = @project.bugs.new(bug_params)
     @bug.posted_by = current_user
-    @bug.status = "neew"
-    redirect_to project_path(@project)
-  end
-
-  def destroy
-    @bug = @project.bugs.find(params[:id])
-    @bug.destroy
-    redirect_to project_path(@project)
+    @bug.status = 'neew'
+    if @bug.save
+      redirect_to project_path(@project), notice: 'bug created successfully'
+    else
+      redirect_to project_path(@project), notice: 'bug not created'
+    end
   end
 
   def show
     @bug = @project.bugs.find(params[:id])
   end
 
-  # def edit
-  #   @bug = @project.bugs.find(params[:id])
-  # end
+  def edit
+    @bug = @project.bugs.find(params[:id])
+  end
 
-  # def update
-  #   @bug = @project.bugs.find(params[:id])
-  #   if @bugs.update(bug_params)
-  #     redirect_to @bug
-  #   else
-  #     render :edit
-  #   end
-  # end
+  def update
+    @bug = @project.bugs.find(params[:id])
+    if @bugs.update(bug_params)
+      redirect_to @bug, notice: 'bug updated successfully'
+    else
+      render :edit, 'bug not updated'
+    end
+  end
+
+  def destroy
+    @bug = @project.bugs.find_by(id: params[:id])
+    if @bug.destroy
+      redirect_to project_path(@project), notice: 'bug successfully destroyed'
+    else
+      redirect_to project_path(@project), notice: 'bug not destroyed'
+    end
+  end
 
   def assign
-    @bug = @project.bugs.find(params[:id])
+    @bug = @project.bugs.find_by(id: params[:bug_id].to_i)
     if @bug.update_attribute(:assigned_to_id, current_user.id)
-      redirect_to @bug, notice: "dev assigned successfully"
+      redirect_to project_bug_path(@project, @bug), notice: 'dev assigned successfully'
     else
-      redirect_to @bug, notice: "not assigned"
+      redirect_to project_bug_path(@project, @bug), notice: 'not assigned'
     end
   end
 
   def start_working
-    @bug = @project.bugs.find(params[:id])
+    @bug = @project.bugs.find_by(id: params[:bug_id])
     if @bug.update_attribute(:status, 'started')
-      redirect_to @bug, notice: "started successfully"
+      redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
     else
-      redirect_to @bug, notice: "not started"
+      redirect_to project_bug_path(@project, @bug), notice: 'not started'
     end
   end
 
   def work_done
-    @bug = @project.bugs.find(params[:id])
-    status = (@bug.bug_type == 'feature')? 'completed' : 'resolved'
+    @bug = @project.bugs.find_by(id: params[:bug_id])
+    status = @bug.bug_type == 'feature' ? 'completed' : 'resolved'
     if @bug.update_attribute(:status, status)
-      redirect_to @bug, notice: "started successfully"
+      redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
     else
-      redirect_to @bug, notice: "not started"
+      redirect_to project_bug_path(@project, @bug), notice: 'not started'
     end
   end
-
 
   private
 
   def find_project
-    @project = Project.find(params[:project_id])
+    @project = Project.find_by(id: params[:project_id].to_i)
   end
 
   def bug_params
-    params.require(:bug).permit(:project_id, :title, :description, :deadline, :posted_by, :status, :bug_type, :screenshot, :assigned_to_id)
+    params.require(:bug).permit(:project_id, :title, :description, :deadline, :posted_by, :status, :bug_type,
+                                :screenshot, :assigned_to_id)
+  end
+
+  def authorize_bug
+    if @bug.present?
+      authorize @bug
+    else
+      authorize Bug
+    end
   end
 end

@@ -1,9 +1,9 @@
 <div>
-  <ul>
+  <ul class="list-group">
     <% @project_pres.unassigned_qa.each do |qa| %>
-    <li>
+    <li class="list-group-item">
       <p><%= qa.name %></p>
-      <%= @project_pres.link_to_add_user_to_project(qa.id) %>
+      <button class="btn btn-primary"><%= @project_pres.link_to_assign_user_to_project(qa.id) %></button>
     </li>
     <% end %>
   </ul>

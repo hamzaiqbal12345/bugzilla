@@ -12,11 +12,11 @@ class BugPolicy < ApplicationPolicy
   end
 
   def new?
-    @user.qa?
+    @user.role == 'qa' || @user.role == 'manager'
   end
 
   def create?
-    @user.qa?
+    new?
   end
 
   def edit?

@@ -1,31 +1,9 @@
-<p>
-  <strong>title</strong>
-  <%= bug.title %>
-</p>
-<p>
-  <strong>Description</strong>
-  <%= bug.description %>
-</p>
-<p>
-  <strong>Deadline</strong>
-  <%= bug.deadline %>
-</p>
-<p>
-  <strong>Status</strong>
-  <%= bug.status %>
-</p>
-<p>
-  <strong>bug_type</strong>
-  <%= bug.bug_type %>
-</p>
-<p>
-  <strong>Screenshot</strong>
-  <% if bug.screenshot.attached? %>
-  <% image_tag bug.screenshot, style: "width: 200px; display: block" %>
-  <% end %>
-</p>
+<div class="card mr-4" style="width: 18rem;">
+  <%= cl_image_tag(bug.screenshot.key, width: 300, height: 200, crop: :scale, class:"card-img-top" ) %>
+  <div class="card-body">
+    <h5 class="card-title"><%= bug.title %></h5>
+    <p class="card-text"><%= bug.description %></p>
+    <button class="btn btn-primary"><%= link_to 'View', project_bug_path(bug.project, bug), class: "text-light" %></button>
+  </div>
+</div>
 
-
-<p>
-  <%= link_to 'Destroy Bug', [bug.project, bug], method: :delete, data: { confirm: 'Are you sure'} %>
-</p>

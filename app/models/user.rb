@@ -10,5 +10,5 @@ class User < ApplicationRecord
   # has_many :projects, foreign_key: :creater_id, dependent: :destroy
   has_many :bugs, foreign_key: 'posted_by_id'
 
-  enum role: [:manager, :developer, :qa]
+  enum role: %i[manager developer qa]
 end

@@ -3,11 +3,11 @@ class ProjectPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       if @user.manager?
-      	scope.where(creator_id: @user.id)
+        scope.where(creator_id: @user.id)
       elsif @user.qa?
-      	scope.all
+        scope.all
       elsif @user.developer?
-      	scope = @user.projects
+        scope = @user.projects
       end
     end
   end
@@ -25,8 +25,12 @@ class ProjectPolicy < ApplicationPolicy
     new?
   end
 
+  def show?
+    @project.users.include?(@user) || @project.creator_id == @user.id
+  end
+
   def update?
-    @user == @project.creator_id && @user.manager?
+    @user.id == @project.creator_id && @user.manager?
   end
 
   def edit?
@@ -37,4 +41,11 @@ class ProjectPolicy < ApplicationPolicy
     update?
   end
 
+  def add_user?
+    update?
+  end
+
+  def remove_user?
+    update?
+  end
 end
