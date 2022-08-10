@@ -1,10 +1,10 @@
 class BugsController < ApplicationController
   before_action :find_project
-  before_action :authorize_bug, only: %i[create destroy]
+  before_action :authorize_bug, only: %i[create]
 
   def create
     @bug = @project.bugs.new(bug_params)
-    @bug.posted_by = current_user
+    @bug.posted_by_id = current_user.id
     @bug.status = 'neew'
     if @bug.save
       redirect_to project_path(@project), notice: 'bug created successfully'
@@ -32,6 +32,7 @@ class BugsController < ApplicationController
 
   def destroy
     @bug = @project.bugs.find_by(id: params[:id])
+    authorize @bug
     if @bug.destroy
       redirect_to project_path(@project), notice: 'bug successfully destroyed'
     else
@@ -41,6 +42,7 @@ class BugsController < ApplicationController
 
   def assign
     @bug = @project.bugs.find_by(id: params[:bug_id].to_i)
+    authorize @bug
     if @bug.update_attribute(:assigned_to_id, current_user.id)
       redirect_to project_bug_path(@project, @bug), notice: 'dev assigned successfully'
     else

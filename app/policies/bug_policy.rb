@@ -20,14 +20,27 @@ class BugPolicy < ApplicationPolicy
   end
 
   def edit?
-    @bug.posted_by == @user
+    @bug.posted_by_id == @user.id
   end
 
   def update?
     edit?
   end
 
-  def delete?
-    edit?
+  def destroy?
+      edit?
   end
+
+  def assign?
+    @user.developer?
+  end
+
+  def start_working?
+    @bug.assigned_to_id == @user.id
+  end
+
+  def work_done?
+    start_working?
+  end
+
 end
