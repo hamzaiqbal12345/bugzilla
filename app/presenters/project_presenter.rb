@@ -16,10 +16,10 @@ class ProjectPresenter < BasePresenter
   end
 
   def link_to_assign_user_to_project(user_id)
-    views.link_to('Assign', views.add_user_project_path(user_id: user_id), method: :patch, class: 'text-light')
+    views.link_to('Assign', views.add_user_project_path(user_id: user_id), method: :patch, remote: true , class: 'text-light')
   end
 
   def link_to_unassign_user_from_project(user_id)
-    views.link_to('Unassign', views.remove_user_project_path(user_id: user_id), method: :patch, class: 'text-light')
+    views.link_to('Unassign', views.remove_user_project_path(user_id: user_id), method: :patch, remote: true , class: 'text-light')
   end
 end
