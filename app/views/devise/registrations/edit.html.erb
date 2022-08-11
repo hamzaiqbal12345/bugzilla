@@ -38,6 +38,11 @@
     <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
   </div>
 
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, ['manager', 'developer', 'qa'], {} , { class: "form-control custom-select" }%>
+  </div>
+
   <div class="actions mt-4">
     <%= f.submit "Update", class: 'btn btn-primary' %>
   </div>

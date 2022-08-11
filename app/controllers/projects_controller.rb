@@ -14,7 +14,8 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
     @project = current_user.projects.new(project_params)
@@ -39,6 +40,7 @@ class ProjectsController < ApplicationController
   end
 
   def add_user
+    authorize @project
     @user ||= User.find_by(id: params[:user_id])
     if @project.users << @user
       redirect_to @project
@@ -48,6 +50,7 @@ class ProjectsController < ApplicationController
   end
 
   def remove_user
+    authorize @project
     @user ||= User.find_by(id: params[:user_id])
     if @project.users.destroy(@user)
       redirect_to @project

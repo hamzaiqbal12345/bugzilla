@@ -1,9 +1,9 @@
 class BugsController < ApplicationController
   before_action :find_project
-  before_action :authorize_bug, only: %i[create]
 
   def create
     @bug = @project.bugs.new(bug_params)
+    authorize @bug
     @bug.posted_by_id = current_user.id
     @bug.status = 'neew'
     if @bug.save
@@ -41,7 +41,7 @@ class BugsController < ApplicationController
   end
 
   def assign
-    @bug = @project.bugs.find_by(id: params[:bug_id].to_i)
+    @bug = @project.bugs.find_by(id: params[:bug_id])
     authorize @bug
     if @bug.update_attribute(:assigned_to_id, current_user.id)
       redirect_to project_bug_path(@project, @bug), notice: 'dev assigned successfully'
@@ -72,7 +72,7 @@ class BugsController < ApplicationController
   private
 
   def find_project
-    @project = Project.find_by(id: params[:project_id].to_i)
+    @project = Project.find_by(id: params[:project_id])
   end
 
   def bug_params
@@ -80,11 +80,4 @@ class BugsController < ApplicationController
                                 :screenshot, :assigned_to_id)
   end
 
-  def authorize_bug
-    if @bug.present?
-      authorize @bug
-    else
-      authorize Bug
-    end
-  end
 end

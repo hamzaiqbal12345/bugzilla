@@ -10,7 +10,7 @@ class Bug < ApplicationRecord
   validates :title, :bug_type, :status, presence: true
   validates_uniqueness_of :title, scope: :project_id
 
-  enum bug_type: %i[bug feature improvement]
+  enum bug_type: %i[bug feature]
   enum status: %i[neew started completed resolved]
 
   private
