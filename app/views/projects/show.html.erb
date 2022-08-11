@@ -15,12 +15,13 @@
   <div class="d-flex mb-4 flex-wrap">
     <%= render @project.bugs %>
   </div>
-
-  <h4 class="mt-5">Add a bug:</h4>
-  <a class="btn btn-warning mb-4 mt-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    show the form
-  </a>
-  <%= render 'bugs/form', project: @project, bug: @project.bugs.build %>
+  <% if current_user.qa? %>
+    <h4 class="mt-5">Add a bug:</h4>
+    <a class="btn btn-warning mb-4 mt-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      show the form
+    </a>
+    <%= render 'bugs/form', project: @project, bug: @project.bugs.build %>
+  <% end %>
 
 
   <div class="d-flex ">

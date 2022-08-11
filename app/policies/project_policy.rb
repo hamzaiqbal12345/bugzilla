@@ -26,7 +26,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def show?
-    @project.users.include?(@user) || @project.creator_id == @user.id
+    @project.users.include?(@user) || @project.creator_id == @user.id || @user.qa?
   end
 
   def update?

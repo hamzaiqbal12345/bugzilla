@@ -14,7 +14,7 @@
         <%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-item text-warning' %>
       </li>
 
-      <% if user_signed_in? %>
+      <% if user_signed_in? && current_user.manager? %>
       <li class="nav-item active mr-3">
         <%= link_to "new project", new_project_path, class: 'nav-item text-warning' %>
       </li>
