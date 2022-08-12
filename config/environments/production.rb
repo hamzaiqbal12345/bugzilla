@@ -47,7 +47,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'bugzilla-tracking.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'https://bugzilla-tracking.herokuapp.com' }
   config.action_mailer.smtp_settings = {
     user_name: Rails.application.credentials.dig(:mail, :user_name),
     password: Rails.application.credentials.dig(:mail, :password),
