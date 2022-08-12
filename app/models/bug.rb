@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bug < ApplicationRecord
   belongs_to :project
   belongs_to :assigned_to, class_name: :User, optional: true
@@ -8,10 +10,10 @@ class Bug < ApplicationRecord
   validate :correct_image_type
 
   validates :title, :bug_type, :status, presence: true
-  validates_uniqueness_of :title, scope: :project_id
+  validates :title, uniqueness: { scope: :project_id }
 
-  enum bug_type: %i[bug feature]
-  enum status: %i[neew started completed resolved]
+  enum bug_type: { bug: 0, feature: 1 }
+  enum status: { neew: 0, started: 1, completed: 2, resolved: 3 }
 
   private
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # , :lockable, :timeoutable, :trackable and :omniauthable
@@ -10,5 +12,5 @@ class User < ApplicationRecord
   # has_many :projects, foreign_key: :creater_id, dependent: :destroy
   has_many :bugs, foreign_key: 'posted_by_id'
 
-  enum role: %i[manager developer qa]
+  enum role: { manager: 0, developer: 1, qa: 2 }
 end

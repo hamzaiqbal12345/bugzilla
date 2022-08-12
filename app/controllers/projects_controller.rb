@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectsController < ApplicationController
   before_action :find_project, except: %i[index new create]
   before_action :authorize_project, only: %i[new edit create show add_user remove_user]
@@ -14,8 +16,7 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @project = current_user.projects.new(project_params)

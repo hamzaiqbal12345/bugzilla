@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BugsController < ApplicationController
   before_action :find_project
 
@@ -79,5 +81,4 @@ class BugsController < ApplicationController
     params.require(:bug).permit(:project_id, :title, :description, :deadline, :posted_by, :status, :bug_type,
                                 :screenshot, :assigned_to_id)
   end
-
 end

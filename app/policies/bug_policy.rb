@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BugPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -28,7 +30,7 @@ class BugPolicy < ApplicationPolicy
   end
 
   def destroy?
-      edit?
+    edit?
   end
 
   def assign?
@@ -42,5 +44,4 @@ class BugPolicy < ApplicationPolicy
   def work_done?
     start_working?
   end
-
 end
