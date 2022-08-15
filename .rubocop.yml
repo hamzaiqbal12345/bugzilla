@@ -15,7 +15,7 @@ AllCops:
     - 'bin/**/*'
 
 Layout/LineLength:
-  Max: 120
+  Max: 185
 
 Metrics/MethodLength:
   Max: 23

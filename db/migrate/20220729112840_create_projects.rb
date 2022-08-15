@@ -3,8 +3,8 @@
 class CreateProjects < ActiveRecord::Migration[5.2]
   def change
     create_table :projects do |t|
-      t.string :title
-      t.text :description
+      t.string :title, null: false, default: ''
+      t.text :description, null: false, default: ''
       t.references :creator
 
       t.timestamps

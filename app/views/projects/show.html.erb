@@ -24,6 +24,7 @@
   <% end %>
 
 
+  <% if current_user.manager? %>
   <div class="d-flex ">
     <div class="mt-4 mr-4 mb-4">
       <h4>Developers</h4>
@@ -59,6 +60,7 @@
       <%= render 'qa' %>
     </div>
   </div>
+  <% end %>
 
 
 

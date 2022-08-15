@@ -9,6 +9,7 @@ class BugPolicy < ApplicationPolicy
   end
 
   def initialize(user, bug)
+    super
     @user = user
     @bug = bug
   end

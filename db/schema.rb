@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_11_081028) do
+ActiveRecord::Schema.define(version: 2022_08_04_102342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(version: 2022_08_11_081028) do
   end
 
   create_table "bugs", force: :cascade do |t|
-    t.text "description", null: false
+    t.string "title", default: "", null: false
+    t.text "description", default: "", null: false
     t.datetime "deadline"
     t.bigint "assigned_to_id"
     t.bigint "project_id"
@@ -47,18 +48,17 @@ ActiveRecord::Schema.define(version: 2022_08_11_081028) do
     t.integer "bug_type"
     t.integer "status"
     t.string "screenshot"
-    t.string "title", null: false
     t.index ["assigned_to_id"], name: "index_bugs_on_assigned_to_id"
     t.index ["posted_by_id"], name: "index_bugs_on_posted_by_id"
     t.index ["project_id"], name: "index_bugs_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
-    t.text "description", null: false
+    t.string "title", default: "", null: false
+    t.text "description", default: "", null: false
     t.bigint "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title", null: false
     t.index ["creator_id"], name: "index_projects_on_creator_id"
   end
 
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2022_08_11_081028) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.string "name", default: "", null: false
     t.integer "role"
     t.string "confirmation_token"
     t.datetime "confirmed_at"

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   # expectional handling
   rescue_from ActiveRecord::RecordNotDestroyed, with: :not_destroyed
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  rescue_from ActionController::RoutingError, with: :render_404
+  rescue_from ActionController::RoutingError, with: :render404
 
   protected
 
@@ -34,13 +34,13 @@ class ApplicationController < ActionController::Base
     redirect_to projects_path, notice: error.message
   end
 
-  def not_destroyed(e)
-    render json: { errors: e.record }, status: :unprocessable_entity
+  def not_destroyed(error)
+    render json: { errors: error.record }, status: :unprocessable_entity
   end
 
-  def render_404
+  def render404
     respond_to do |format|
-      format.html { render "#{Rails.root}/public/404.html", status: :not_found }
+      format.html { render Rails.root.join('app/views/errors/not_found.html.erb'), status: :not_found }
       format.json { render json: { status: 404, message: 'Page Not Found' } }
     end
   end

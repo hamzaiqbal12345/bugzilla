@@ -3,18 +3,20 @@
 class ProjectPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
+
     def resolve
       if @user.manager?
         scope.where(creator_id: @user.id)
       elsif @user.qa?
         scope.all
       elsif @user.developer?
-        scope = @user.projects
+        @user.projects
       end
     end
   end
 
   def initialize(user, project)
+    super
     @user = user
     @project = project
   end

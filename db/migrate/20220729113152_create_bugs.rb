@@ -3,8 +3,8 @@
 class CreateBugs < ActiveRecord::Migration[5.2]
   def change
     create_table :bugs do |t|
-      t.string :title
-      t.text :description
+      t.string :title, null: false, default: ''
+      t.text :description, null: false, default: ''
       t.datetime :deadline
       t.references :assigned_to
       t.references :project, foreign_key: true

@@ -11,24 +11,22 @@
   </ul>
   <div class="card-body">
     <%= link_to "Back", project_path(@bug.project), class: 'card-link' %>
-    <%= link_to "Edit", edit_project_bug_path(@bug.project, @bug), class: 'card-link' %>
     <%= link_to "Destroy", [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure'}, class: 'card-link' %>
   </div>
 </div>
-
+<br>
+<% if current_user.developer? %>
 <div class="row">
   <h1 class="col-md-9"><%= @bug.title %></h1>
   <div class="col-md-3">
-    <%= link_to "assign", project_bug_assign_path(@project, @bug),method: :patch, remote: true, class: "btn btn-outline-primary" unless @bug.assigned_to_id %>
-    <% if @bug.assigned_to_id %>
-      <%= link_to "Start Working", project_bug_start_working_path(@bug.project, @bug),method: :patch, remote: true , class: "btn btn-outline-primary" if @bug.status == 'neew' %>
-      <%= link_to (@bug.bug_type=='bug')? 'resolved' : 'completed', project_bug_work_done_path(@bug.project, @bug), remote: true, method: :patch, class: "btn btn-outline-primary" if @bug.status == 'started' %>
-    <% end %>
+    <%= create_bug_assign_btn(@project, @bug) %>
   </div>
+  <br>
   <div>
-    <% if @bug.assigned_to_id %>
-      <p>assigned_to_id: <%= @bug.assigned_to_id %></p>
+    <% if @bug.assigned_to %>
+      <p><strong>Assigned devleoper: </strong> <%= @bug.assigned_to.name %></p>
     <% end %>
   </div>
 </div>
+<% end %>
 

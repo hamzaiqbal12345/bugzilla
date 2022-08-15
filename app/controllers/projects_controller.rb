@@ -21,14 +21,10 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(project_params)
     @project.creator_id = current_user.id
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render action: 'show', status: :created, location: projects_path }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.save
+      redirect_to @project, notice: 'Project was successfully created.'
+    else
+      render action: 'new', notice: 'Project not created'
     end
   end
 
@@ -42,7 +38,7 @@ class ProjectsController < ApplicationController
 
   def add_user
     authorize @project
-    @user ||= User.find_by(id: params[:user_id])
+    @user = User.find_by(id: params[:user_id])
     if @project.users << @user
       redirect_to @project
     else
@@ -52,7 +48,7 @@ class ProjectsController < ApplicationController
 
   def remove_user
     authorize @project
-    @user ||= User.find_by(id: params[:user_id])
+    @user = User.find_by(id: params[:user_id])
     if @project.users.destroy(@user)
       redirect_to @project
     else
@@ -75,7 +71,7 @@ class ProjectsController < ApplicationController
   end
 
   def find_project
-    @project ||= Project.find_by(id: params[:id])
+    @project = Project.find_by(id: params[:id])
   end
 
   def authorize_project

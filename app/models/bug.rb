@@ -7,10 +7,8 @@ class Bug < ApplicationRecord
 
   has_one_attached :screenshot
 
-  validate :correct_image_type
-
   validates :title, :bug_type, :status, presence: true
-  validates :title, uniqueness: { scope: :project_id }
+  validates :title, uniqueness: true
 
   enum bug_type: { bug: 0, feature: 1 }
   enum status: { neew: 0, started: 1, completed: 2, resolved: 3 }

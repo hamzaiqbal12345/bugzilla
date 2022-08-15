@@ -2,6 +2,7 @@
 
 class BugsController < ApplicationController
   before_action :find_project
+  before_action :find_bug, only: %i[show edit update destroy]
 
   def create
     @bug = @project.bugs.new(bug_params)
@@ -15,16 +16,11 @@ class BugsController < ApplicationController
     end
   end
 
-  def show
-    @bug = @project.bugs.find(params[:id])
-  end
+  def show; end
 
-  def edit
-    @bug = @project.bugs.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @bug = @project.bugs.find(params[:id])
     if @bugs.update(bug_params)
       redirect_to @bug, notice: 'bug updated successfully'
     else
@@ -33,7 +29,6 @@ class BugsController < ApplicationController
   end
 
   def destroy
-    @bug = @project.bugs.find_by(id: params[:id])
     authorize @bug
     if @bug.destroy
       redirect_to project_path(@project), notice: 'bug successfully destroyed'
@@ -45,7 +40,8 @@ class BugsController < ApplicationController
   def assign
     @bug = @project.bugs.find_by(id: params[:bug_id])
     authorize @bug
-    if @bug.update_attribute(:assigned_to_id, current_user.id)
+    @bug.assigned_to_id = current_user.id
+    if @bug.save
       redirect_to project_bug_path(@project, @bug), notice: 'dev assigned successfully'
     else
       redirect_to project_bug_path(@project, @bug), notice: 'not assigned'
@@ -54,7 +50,9 @@ class BugsController < ApplicationController
 
   def start_working
     @bug = @project.bugs.find_by(id: params[:bug_id])
-    if @bug.update_attribute(:status, 'started')
+    authorize @bug
+    @bug.status = 'started'
+    if @bug.save
       redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
     else
       redirect_to project_bug_path(@project, @bug), notice: 'not started'
@@ -64,7 +62,9 @@ class BugsController < ApplicationController
   def work_done
     @bug = @project.bugs.find_by(id: params[:bug_id])
     status = @bug.bug_type == 'feature' ? 'completed' : 'resolved'
-    if @bug.update_attribute(:status, status)
+    authorize @bug
+    @bug.status = status
+    if @bug.save
       redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
     else
       redirect_to project_bug_path(@project, @bug), notice: 'not started'
@@ -75,6 +75,10 @@ class BugsController < ApplicationController
 
   def find_project
     @project = Project.find_by(id: params[:project_id])
+  end
+
+  def find_bug
+    @bug = @project.bugs.find(params[:id])
   end
 
   def bug_params
