@@ -1,5 +1,4 @@
 ## Bugzilla - bug tracking application
-
 This project is basically the implementation of a bug tracking system. There are three user roles[Manager, Developer, Quality assurance].
 
 Manager can create new/edit projects.
@@ -17,37 +16,49 @@ Quality assurance can add bugs to the project.
 Authenticated manager can create the project
 
 Unauthenticated manager cannot create the project
+##### 1. Check out the repository
+```bash
+git clone https://github.com/hamzaiqbal12345/bugzilla.git
+```
+##### 2. Create database.yml file
+Copy the sample database.yml file and edit the database configuration as required.
+```bash
+cp config/database.yml.sample config/database.yml
+```
+##### 3. Create and setup the database
+Run the following commands to create and setup the database.
+```ruby
+rails db:create
+rails db:setup
+```
+##### 3. Install gems using bundler
+```ruby
+Run bundle install
+```
+<<<<<<< HEAD
+##### 4. Start the Rails server
+=======
+##### 4. Setup database and migrations
+```ruby
+  rails db:migrate
+```
+##### 5. Load seed data
+```ruby
+  rails db:seed
+```
+##### 6. Start the Rails server
+You can start the rails server using the command given below.
+```ruby
+bundle exec rails s
+```
+```
+ruby “2.7.1”
+rails, “~> 5.2.0"
+bootstrap-sass, ‘~> 3.3’, ‘>= 3.3.6’
+postgres
+activestorag
+bootstrap
+cloudinary
+jquery-rails
+pundit
 
-System Dependencies
-
-Rails 5.2.0
-ruby 2.7.0
-pg >= 0.18', '< 2.0'
-Services
-
-Action Mailer
-
-Cloudinary DB
-
-DB used: Postgress
-
-Gems used
-
-gem 'devise'
-gem 'bootstrap', '~> 4.2.1'
-gem 'jquery-rails'
-gem 'pundit'
-gem 'bootsnap', '>= 1.1.0'
-gem 'pg', '>= 0.18', '< 2.0'
-How to use
-
-Clone this repo
-Go to project Directory
-get master key of project and set it as config:set RAILS_MASTER_KEY='*******'
-create following variables and set credetials of cloudinary. cloud_name,api_key,api_secret and CLOUDINARY_URL
-create following varibles and set credetials of gmail for sending mail. MAIL_USERNAME: 'abc.xyz@gmail.com' MAIL_PASSWORD: '******'
-Do Bundle install
-DO rails db:migrate rails db:setup
-DO db:seed
-start server with rails s
-App is running

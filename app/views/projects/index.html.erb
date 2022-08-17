@@ -10,11 +10,17 @@
   </thead>
 
   <tbody>
-    <% @projects.each do |project| %>
+    <% if @projects.count > 0  %>
+      <% @projects.each do |project| %>
+        <tr scope="row">
+          <td> <%= project.title %></td>
+          <td><%= project.description %></td>
+          <td><%= link_to 'View', project_path(project) %></td>
+        </tr>
+      <% end %>
+    <% else %>
       <tr scope="row">
-        <td> <%= project.title %></td>
-        <td><%= project.description %></td>
-        <td><%= link_to 'View', project_path(project) %></td>
+        <td><h4>No Projects found</h4></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,9 +1,12 @@
   <div class="form-group">
     <%= form_with model: project do |form| %>
+
     <% if project.errors.any? %>
-      <% project.errors.full_messages.each do |message| %>
-        <p><%= message %></p>
-      <% end %>
+      <div class="invalid-feedback d-block">
+        <% project.errors.full_messages.each do |message| %>
+          <p class="alert alert alert-danger" class="alert alert-danger" role="alert"><%= message %></p>
+        <% end %>
+      </div>
     <% end %>
     <div class="mb-3 ">
       <%= form.label :title %>
@@ -19,3 +22,6 @@
     </div>
     <% end %>
   </div>
+
+
+

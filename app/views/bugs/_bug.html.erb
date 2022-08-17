@@ -1,5 +1,7 @@
 <div class="card mr-4" style="width: 18rem;">
-  <%= cl_image_tag(bug.screenshot.key, width: 300, height: 200, crop: :scale, class:"card-img-top" ) %>
+  <% if bug.screenshot.attached? %>
+    <%= cl_image_tag(bug.screenshot.key, width: 300, height: 200, crop: :scale, class:"card-img-top" ) %>
+  <% end %>
   <div class="card-body">
     <h5 class="card-title"><%= bug.title %></h5>
     <p class="card-text"><%= bug.description %></p>

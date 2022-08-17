@@ -12,7 +12,7 @@ class BugsController < ApplicationController
     if @bug.save
       redirect_to project_path(@project), notice: 'bug created successfully'
     else
-      redirect_to project_path(@project), notice: 'bug not created'
+      redirect_to project_path(@project), alert: @bug.errors.messages
     end
   end
 
@@ -33,7 +33,7 @@ class BugsController < ApplicationController
     if @bug.destroy
       redirect_to project_path(@project), notice: 'bug successfully destroyed'
     else
-      redirect_to project_path(@project), notice: 'bug not destroyed'
+      redirect_to project_path(@project), alert: 'bug not destroyed'
     end
   end
 
@@ -44,7 +44,7 @@ class BugsController < ApplicationController
     if @bug.save
       redirect_to project_bug_path(@project, @bug), notice: 'dev assigned successfully'
     else
-      redirect_to project_bug_path(@project, @bug), notice: 'not assigned'
+      redirect_to project_bug_path(@project, @bug), alert: 'not assigned'
     end
   end
 
@@ -55,7 +55,7 @@ class BugsController < ApplicationController
     if @bug.save
       redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
     else
-      redirect_to project_bug_path(@project, @bug), notice: 'not started'
+      redirect_to project_bug_path(@project, @bug), alert: 'not started'
     end
   end
 
@@ -67,7 +67,7 @@ class BugsController < ApplicationController
     if @bug.save
       redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
     else
-      redirect_to project_bug_path(@project, @bug), notice: 'not started'
+      redirect_to project_bug_path(@project, @bug), alert: 'not started'
     end
   end
 

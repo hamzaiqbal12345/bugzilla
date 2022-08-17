@@ -1,5 +1,7 @@
 <div class="card" >
-  <%= cl_image_tag(@bug.screenshot.key, width: 300, height: 200, crop: :scale, class: 'card-img-top') %>
+  <% if @bug.screenshot.attached? %>
+    <%= cl_image_tag(@bug.screenshot.key, width: 300, height: 200, crop: :scale, class: 'card-img-top') %>
+  <% end %>
   <div class="card-body">
     <h5 class="card-title"><strong>Title: </strong><%= @bug.title %></h5>
     <p class="card-text"><strong>Description: </strong><%= @bug.description %></p>
@@ -11,11 +13,13 @@
   </ul>
   <div class="card-body">
     <%= link_to "Back", project_path(@bug.project), class: 'card-link' %>
-    <%= link_to "Destroy", [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure'}, class: 'card-link' %>
+    <% if policy(@bug).destroy? %>
+      <%= link_to "Destroy", [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure'}, class: 'card-link' %>
+    <% end %>
   </div>
 </div>
 <br>
-<% if current_user.developer? %>
+<% if policy(@bug).assign? %>
 <div class="row">
   <h1 class="col-md-9"><%= @bug.title %></h1>
   <div class="col-md-3">

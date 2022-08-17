@@ -6,6 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
       <li class="nav-item active mr-3 ml-4">
         <%= link_to "Projects", projects_path, class: 'nav-item text-warning' %>
       </li>
@@ -13,10 +14,11 @@
       <li class="nav-item active mr-3">
         <%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-item text-warning' %>
       </li>
+      <% end %>
 
       <% if user_signed_in? && current_user.manager? %>
       <li class="nav-item active mr-3">
-        <%= link_to "new project", new_project_path, class: 'nav-item text-warning' %>
+        <%= link_to "New project", new_project_path, class: 'nav-item text-warning' %>
       </li>
       <% end %>
 

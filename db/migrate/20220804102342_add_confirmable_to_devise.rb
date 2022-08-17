@@ -30,11 +30,11 @@ class AddConfirmableToDevise < ActiveRecord::Migration[5.2]
     remove_columns :users, :unconfirmed_email # Only if using reconfirmable
 
     # change_table :users, bulk: true do |t|
-    #   t.string :confirmation_token
-    #   t.datetime :confirmed_at
-    #   t.datetime :confirmation_sent_at
-    #   t.string :unconfirmed_email # Only if using reconfirmable
-    #   t.index :confirmation_token, unique: true
+    #   t.remove :confirmation_token
+    #   t.remove :confirmed_at
+    #   t.remove :confirmation_sent_at
+    #   t.remove :unconfirmed_email # Only if using reconfirmable
+    #   t.remove :confirmation_token, unique: true
     # end
   end
 end

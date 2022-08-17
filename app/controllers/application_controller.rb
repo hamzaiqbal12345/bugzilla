@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found(error)
-    redirect_to projects_path, notice: error.message
+    redirect_to projects_path, alert: error.to_s.first(35)
   end
 
   def not_destroyed(error)

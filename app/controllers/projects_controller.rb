@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
     else
-      render action: 'new', notice: 'Project not created'
+      render action: 'new', alert: 'Project was not created'
     end
   end
 
@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       redirect_to @project, notice: 'Project has been updated successfully'
     else
-      render :edit, notice: 'project didnt update'
+      render :edit, alert: 'project didnt update'
     end
   end
 
@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
     if @project.users << @user
       redirect_to @project
     else
-      redirect_to @project, notice: 'Can not add user to project'
+      redirect_to @project, alert: 'Can not add user to project'
     end
   end
 
@@ -52,7 +52,7 @@ class ProjectsController < ApplicationController
     if @project.users.destroy(@user)
       redirect_to @project
     else
-      redirect_to @project, notice: 'Can not remove user from project'
+      redirect_to @project, alert: 'Can not remove user from project'
     end
   end
 
@@ -60,18 +60,18 @@ class ProjectsController < ApplicationController
     if @project.destroy
       redirect_to projects_path, notice: 'Project successfully deleted'
     else
-      redirect_to projects_path, notice: 'cannot delete the project'
+      redirect_to projects_path, alert: 'cannot delete the project'
     end
   end
 
   private
 
   def project_params
-    params.require(:project).permit(:title, :description)
+    params.require(:project).permit(:title, :description, :creator_id)
   end
 
   def find_project
-    @project = Project.find_by(id: params[:id])
+    @project = Project.find(params[:id])
   end
 
   def authorize_project
