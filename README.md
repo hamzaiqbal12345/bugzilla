@@ -35,8 +35,6 @@ rails db:setup
 ```ruby
 Run bundle install
 ```
-#### 4. Start the Rails server
-=======
 #### 4. Setup database and migrations
 ```ruby
   rails db:migrate
