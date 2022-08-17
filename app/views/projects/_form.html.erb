@@ -1,0 +1,27 @@
+  <div class="form-group">
+    <%= form_with model: project do |form| %>
+
+    <% if project.errors.any? %>
+      <div class="invalid-feedback d-block">
+        <% project.errors.full_messages.each do |message| %>
+          <p class="alert alert alert-danger" class="alert alert-danger" role="alert"><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="mb-3 ">
+      <%= form.label :title %>
+      <%= form.text_field :title, required: true, class: 'form-control', placeholder: 'title' %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :description %>
+      <%= form.text_area :description, required: true, class: 'form-control' %>
+    </div>
+
+    <div>
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+
+

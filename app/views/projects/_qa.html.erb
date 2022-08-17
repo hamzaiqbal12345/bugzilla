@@ -1,0 +1,10 @@
+<div>
+  <ul class="list-group">
+    <% @project_pres.unassigned_qa.each do |qa| %>
+    <li class="list-group-item">
+      <p><%= qa.name %></p>
+      <button class="btn btn-primary"><%= @project_pres.link_to_assign_user_to_project(qa.id) %></button>
+    </li>
+    <% end %>
+  </ul>
+</div>

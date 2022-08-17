@@ -1,0 +1,29 @@
+<div class="collapse form-group"  id="collapseExample">
+  <%= form_with(model: [ project, bug ]) do |form| %>
+
+    <div class="mb-3 ">
+      <%= form.label :title %><br>
+      <%= form.text_field :title, required: true, class: 'form-control' %>
+    </div>
+    <div class="mb-3 ">
+      <%= form.label :description %><br>
+      <%= form.text_area :description,  class: 'form-control' %>
+    </div>
+    <div class="mb-3 ">
+      <%= form.label :screenshot %>
+      <%= form.file_field :screenshot, accept:"image/png,image/gif", direct_upload: true, class: "form-control " %>
+
+    </div>
+    <div class="mb-3 ">
+      <%= form.label :deadline %><br>
+      <%= form.date_select :deadline, { ampm: true, order: [:day, :month, :year] }, { class: "form-control" } %>
+    </div>
+    <div class="mb-3 ">
+      <%= form.label :bug_type %><br>
+      <%= form.select :bug_type, ['bug', 'feature'],{}, { class: "form-control custom-select" } %>
+    </div>
+    <div>
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

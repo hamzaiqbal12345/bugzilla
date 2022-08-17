@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <%= link_to 'Bugzilla', root_path, class:'navbar-brand' %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+      <li class="nav-item active mr-3 ml-4">
+        <%= link_to "Projects", projects_path, class: 'nav-item text-warning' %>
+      </li>
+
+      <li class="nav-item active mr-3">
+        <%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-item text-warning' %>
+      </li>
+      <% end %>
+
+      <% if user_signed_in? && current_user.manager? %>
+      <li class="nav-item active mr-3">
+        <%= link_to "New project", new_project_path, class: 'nav-item text-warning' %>
+      </li>
+      <% end %>
+
+    </ul>
+    <div class=" my-2 my-lg-0 text-light" id="user_nav">
+      <% if user_signed_in? %>
+        Signed in as <%= current_user.name %>. Not you?
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'text-warning ml-3' %>
+      <% else %>
+        <%= link_to "Sign up", new_user_registration_path, class: 'text-warning' %>  or  <%= link_to "sign in", new_user_session_path, class: 'text-warning' %>
+      <% end %>
+    </div>
+  </div>
+</nav>

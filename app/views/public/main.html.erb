@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% stylesheet_link_tag 'application' %>
+</head>
+
+<body>
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container" >
+      <h1>Welcome to <span>Bugzilla</span></h1>
+      <h2>Bugs are meant to be tracked and resolved, a bug tracking application</h2>
+      <div class="d-flex">
+        <% if user_signed_in? %>
+          <%= link_to "Projects", projects_path, class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-primary mr-3' %>    <%= link_to "Sign in", new_user_session_path, class: 'btn btn-warning' %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</body>

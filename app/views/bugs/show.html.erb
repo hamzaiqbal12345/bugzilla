@@ -1,0 +1,36 @@
+<div class="card" >
+  <% if @bug.screenshot.attached? %>
+    <%= cl_image_tag(@bug.screenshot.key, width: 300, height: 200, crop: :scale, class: 'card-img-top') %>
+  <% end %>
+  <div class="card-body">
+    <h5 class="card-title"><strong>Title: </strong><%= @bug.title %></h5>
+    <p class="card-text"><strong>Description: </strong><%= @bug.description %></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><strong>Deadline: </strong><%= @bug.deadline %></li>
+    <li class="list-group-item"><strong>Status: </strong><%= @bug.status %></li>
+    <li class="list-group-item"><strong>Bug Type: </strong><%= @bug.bug_type %></li>
+  </ul>
+  <div class="card-body">
+    <%= link_to "Back", project_path(@bug.project), class: 'card-link' %>
+    <% if policy(@bug).destroy? %>
+      <%= link_to "Destroy", [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure'}, class: 'card-link' %>
+    <% end %>
+  </div>
+</div>
+<br>
+<% if policy(@bug).assign? %>
+<div class="row">
+  <h1 class="col-md-9"><%= @bug.title %></h1>
+  <div class="col-md-3">
+    <%= create_bug_assign_btn(@project, @bug) %>
+  </div>
+  <br>
+  <div>
+    <% if @bug.assigned_to %>
+      <p><strong>Assigned devleoper: </strong> <%= @bug.assigned_to.name %></p>
+    <% end %>
+  </div>
+</div>
+<% end %>
+

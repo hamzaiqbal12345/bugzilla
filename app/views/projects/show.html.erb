@@ -1,0 +1,65 @@
+<div>
+  <div class="card">
+    <h4 class="card-header">Project Name: <%= @project.title%></h4>
+    <div class="card-body">
+      <p class="card-text">Project Description: <%= @project.description %></p>
+      <% if policy(@project).edit? %>
+        <button class="btn btn-primary"><%= link_to 'Edit', edit_project_path(@project), class: 'text-light' %></button>
+      <% end %>
+      <button class="btn btn-grey"><%= link_to 'Back', projects_path, class: "text-dark" %></button>
+  </div>
+  </div>
+
+  <h4 class="mt-4 mb-4">Bugs listed:</h4>
+  <% if @project.bugs.count > 0  %>
+    <div class="d-flex mb-4 flex-wrap">
+      <%= render @project.bugs %>
+    </div>
+  <% else %>
+    <p>Bugs not found</p>
+  <% end %>
+  <% if current_user.qa? %>
+    <h4 class="mt-5">Add a bug:</h4>
+    <a class="btn btn-warning mb-4 mt-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      show the form
+    </a>
+    <%= render 'bugs/form', project: @project, bug: @project.bugs.build %>
+  <% end %>
+
+  <% if policy(@project).add_user? %>
+    <div class="d-flex ">
+      <div class="mt-4 mr-4 mb-4">
+        <h4>Developers</h4>
+        <ul class="list-group">
+          <% @project_pres.project_developers.each do |developer| %>
+            <li class="list-group-item ">
+              <p><%= developer.name %></p>
+              <button class="btn btn-danger"><%= @project_pres.link_to_unassign_user_from_project(developer.id) %></button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="mt-4 mr-4 mb-4">
+        <h4>Quality Assurance (QA)</h4>
+        <ul class="list-group">
+          <% @project_pres.project_qa.each do |qa| %>
+          <li class="list-group-item ">
+            <p><%= qa.name %></p>
+            <button class="btn btn-danger"><%= @project_pres.link_to_unassign_user_from_project(qa.id)%></button>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Unassigned developers and Qa</h3>
+    <div class="d-flex">
+      <div class="mr-4">
+        <%= render 'dev' %>
+      </div>
+      <div>
+        <%= render 'qa' %>
+      </div>
+    </div>
+  <% end %>
+</div>

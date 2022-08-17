@@ -1,0 +1,27 @@
+<h1>Listing Projects</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @projects.count > 0  %>
+      <% @projects.each do |project| %>
+        <tr scope="row">
+          <td> <%= project.title %></td>
+          <td><%= project.description %></td>
+          <td><%= link_to 'View', project_path(project) %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr scope="row">
+        <td><h4>No Projects found</h4></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

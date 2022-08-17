@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -10,11 +12,11 @@ Rails.application.configure do
   config.eager_load = false
 
   # Show full error reports.
-  config.consider_all_requests_local = true
+  config.consider_all_requests_local = false
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store
@@ -28,10 +30,23 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.smtp_settings = {
+    user_name: Rails.application.credentials.dig(:mail, :user_name),
+    password: Rails.application.credentials.dig(:mail, :password),
+    domain: 'localhost:3000',
+    address: 'smtp.gmail.com',
+    port: '587',
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   config.action_mailer.perform_caching = false
 
@@ -51,6 +66,8 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
