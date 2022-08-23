@@ -16,37 +16,34 @@ Quality assurance can add bugs to the project.
 Authenticated manager can create the project
 
 Unauthenticated manager cannot create the project
-##### 1. Check out the repository
+#### 1. Check out the repository
 ```bash
 git clone https://github.com/hamzaiqbal12345/bugzilla.git
 ```
-##### 2. Create database.yml file
+#### 2. Create database.yml file
 Copy the sample database.yml file and edit the database configuration as required.
 ```bash
 cp config/database.yml.sample config/database.yml
 ```
-##### 3. Create and setup the database
+#### 3. Create and setup the database
 Run the following commands to create and setup the database.
 ```ruby
 rails db:create
 rails db:setup
 ```
-##### 3. Install gems using bundler
+#### 3. Install gems using bundler
 ```ruby
 Run bundle install
 ```
-<<<<<<< HEAD
-##### 4. Start the Rails server
-=======
-##### 4. Setup database and migrations
+#### 4. Setup database and migrations
 ```ruby
   rails db:migrate
 ```
-##### 5. Load seed data
+#### 5. Load seed data
 ```ruby
   rails db:seed
 ```
-##### 6. Start the Rails server
+#### 6. Start the Rails server
 You can start the rails server using the command given below.
 ```ruby
 bundle exec rails s
