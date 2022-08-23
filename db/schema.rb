@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 2022_08_17_101332) do
     t.bigint "posted_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "bug_type"
-    t.integer "status"
+    t.integer "bug_type", default: 0, null: false
+    t.integer "status", default: 0, null: false
     t.string "screenshot"
     t.index ["assigned_to_id"], name: "index_bugs_on_assigned_to_id"
     t.index ["posted_by_id"], name: "index_bugs_on_posted_by_id"
