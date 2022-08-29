@@ -20,14 +20,6 @@ class BugsController < ApplicationController
 
   def edit; end
 
-  def update
-    if @bugs.update(bug_params)
-      redirect_to @bug, notice: 'bug updated successfully'
-    else
-      render :edit, 'bug not updated'
-    end
-  end
-
   def destroy
     authorize @bug
     if @bug.destroy
@@ -65,9 +57,9 @@ class BugsController < ApplicationController
     authorize @bug
     @bug.status = status
     if @bug.save
-      redirect_to project_bug_path(@project, @bug), notice: 'started successfully'
+      redirect_to project_bug_path(@project, @bug), notice: 'work done successfully'
     else
-      redirect_to project_bug_path(@project, @bug), alert: 'not started'
+      redirect_to project_bug_path(@project, @bug), alert: 'work done failed'
     end
   end
 

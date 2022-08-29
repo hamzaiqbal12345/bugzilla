@@ -13,9 +13,5 @@ class Bug < ApplicationRecord
   enum bug_type: { bug: 0, feature: 1 }
   enum status: { neew: 0, started: 1, completed: 2, resolved: 3 }
 
-  private
 
-  def correct_image_type
-    errors.add(:screenshot, 'must be a PNG or GIF') unless screenshot.content_type.in?(%w[image/png image/gif])
-  end
 end
