@@ -10,9 +10,3 @@ FactoryBot.define do
     confirmed_at { Time.zone.today }
   end
 end
-
-# def user_with_bugs(bugs_count: 5)
-#   FactoryBot.create(:user) do |user|
-#     FactoryBot.create_list(:bug, bugs_count, user: user)
-#   end
-# end

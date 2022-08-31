@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Bugs', type: :request do
-  let(:manager) { FactoryBot.create :user, role: 0 }
-  let(:developer) { FactoryBot.create :user, role: 1 }
-  let(:qa) { FactoryBot.create :user, role: 2 }
-  let(:project1) { FactoryBot.create(:project, creator_id: manager.id) }
-  let(:user_project1) { FactoryBot.create(:users_project, user_id: manager.id, project_id: project1.id) }
-  let(:user_project2) { FactoryBot.create(:users_project, user_id: developer.id, project_id: project1.id) }
-  let(:user_project3) { FactoryBot.create(:users_project, user_id: qa.id, project_id: project1.id) }
-  let(:bug1) { FactoryBot.create(:bug, project_id: project1.id, posted_by_id: qa.id) }
+  let(:manager) { create(:user, role: 0) }
+  let(:developer) { create(:user, role: 1) }
+  let(:qa) { create(:user, role: 2) }
+  let(:project1) { create(:project, creator_id: manager.id) }
+  let(:user_project1) { create(:users_project, user_id: manager.id, project_id: project1.id) }
+  let(:user_project2) { create(:users_project, user_id: developer.id, project_id: project1.id) }
+  let(:user_project3) { create(:users_project, user_id: qa.id, project_id: project1.id) }
+  let(:bug1) { create(:bug, project_id: project1.id, posted_by_id: qa.id) }
 
   describe 'GET /show' do
     it 'returns status code 200 for showing projects bug to manager' do
@@ -221,7 +221,7 @@ RSpec.describe 'Bugs', type: :request do
       end
 
       it 'destroys the requested bug' do
-        bug2 = FactoryBot.create(:bug, project_id: project1.id, posted_by_id: qa.id, assigned_to_id: developer.id)
+        bug2 = create(:bug, project_id: project1.id, posted_by_id: qa.id, assigned_to_id: developer.id)
         expect do
           delete project_bug_path(project1.id, bug2.id)
         end.to change(Bug, :count).by(-1)

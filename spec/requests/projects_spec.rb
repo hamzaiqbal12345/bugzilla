@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Projects', type: :request do
-  let(:user) { FactoryBot.create :user }
-  let(:user1) { FactoryBot.create :user }
-  let(:project2) { FactoryBot.create(:project, creator_id: user1.id) }
-  let(:project1) { FactoryBot.create(:project, creator_id: user.id) }
-  let(:user_project1) { FactoryBot.create(:users_project, user_id: user.id, project_id: project1.id) }
+  let(:user) { create(:user) }
+  let(:user1) { create(:user) }
+  let(:project2) { create(:project, creator_id: user1.id) }
+  let(:project1) { create(:project, creator_id: user.id) }
+  let(:user_project1) { create(:users_project, user_id: user.id, project_id: project1.id) }
   let(:project_params_valid) { attributes_for(:project, creator_id: user.id, title: Faker::Game.title) }
   let(:project_invalid_params) { attributes_for(:project, title: nil, description: nil) }
 
@@ -133,7 +133,8 @@ RSpec.describe 'Projects', type: :request do
     context 'with invalid parameters' do
       it 'renders a successful response' do
         patch project_path(project1.id), params: { project: project_invalid_params }
-        expect(response).to be_successful
+        project1.reload
+        expect(response).to render_template(:edit)
       end
     end
 
@@ -192,7 +193,7 @@ RSpec.describe 'Projects', type: :request do
 
   describe 'DELETE /destroy' do
     it 'destroys the requested project' do
-      project2 = FactoryBot.create(:project, creator_id: user.id)
+      project2 = create(:project, creator_id: user.id)
       expect do
         delete project_path(project2.id)
       end.to change(Project, :count).by(-1)
