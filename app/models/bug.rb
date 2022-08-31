@@ -12,6 +12,4 @@ class Bug < ApplicationRecord
 
   enum bug_type: { bug: 0, feature: 1 }
   enum status: { neew: 0, started: 1, completed: 2, resolved: 3 }
-
-
 end

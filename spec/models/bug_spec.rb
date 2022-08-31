@@ -17,6 +17,5 @@ RSpec.describe Bug, type: :model do
     it { is_expected.to validate_presence_of(:bug_type) }
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_uniqueness_of(:title) }
-
   end
 end

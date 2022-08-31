@@ -7,7 +7,7 @@ FactoryBot.define do
     role { 0 }
     password { '123456' }
     password_confirmation { '123456' }
-    confirmed_at { Date.today }
+    confirmed_at { Time.zone.today }
   end
 end
 
