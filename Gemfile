@@ -28,6 +28,7 @@ gem 'dotenv-rails'
 gem 'jquery-rails'
 gem 'pundit'
 gem 'turbolinks_render'
+gem 'rack-cors', '~> 0.3.1'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
