@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :users_projects, dependent: :destroy
   has_many :projects, through: :users_projects
 
+  validates :name, :email, :role, presence: true
+
   has_many :bugs, foreign_key: 'posted_by_id', inverse_of: 'posted_by', dependent: :destroy
   enum role: { manager: 0, developer: 1, qa: 2 }
 end
